@@ -22,63 +22,59 @@ rownames(Risk)<-eventsname
 ##Baseline scenario -----------------------------------------------------------------
 
 #Event 1. Loading dirty clothes from hamper to washer
-Contact.time.laundry<-runif(1000, min=1/60, max=10/60)
-
-Conc.h[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry))}
-Conc.l[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
+Conc.h[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.onecloth*exp(-Inact.s*Contact.time.laundry))}
+Conc.l[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
 Dose[1,]<-0
 Risk[1,]<-0
 
 #Event 2. Hand to face contact #1
-
 Conc.h[2,]<-(1-TE.face*Frac.HF)*(Conc.h[1,]*exp(-Inact.h*Contact.time.face.w))
 Conc.l[2,]<-Conc.l[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose[2,]<-Conc.h[1,]*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk[2,]<-0.722*(1-exp(Dose[2,]/1106))
+Risk[2,]<-0.722*(1-exp(-Dose[2,]/1106))
 
 #Event 3. Washing Laundry 
 Conc.h[3,]<-Conc.h[2,]*exp(-Inact.h*(Dur.wash-Contact.time.face.w))
-Conc.l[3,]<-Conc.h[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
+Conc.l[3,]<-Conc.l[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
 Dose[3,]<-Dose[2,]
 Risk[3,]<-Risk[2,]
 
 #Event 4. Loading washed clothes to dryer
-Conc.h[4,]<-Conc.h[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS.wash*
+Conc.h[4,]<-Conc.h[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS*
     (Conc.h[3,]*exp(-Inact.h*Contact.time.laundry)-Conc.l[3,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l[4,]<-Conc.l[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS.wash*T.handarea/Surface.area.laundry*
+Conc.l[4,]<-Conc.l[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS*T.handarea/Surface.area.laundry*
     (Conc.l[3,]*exp(-Inact.s*Contact.time.laundry)-Conc.h[3,]*exp(-Inact.h*Contact.time.laundry))}
 Dose[4,]<-Dose[3,]
 Risk[4,]<-Risk[3,]
 
 #Event 5. Hand to face contact #2
 
-Conc.h[5,]<-(1-TE.face*Frac.HF)*(Conc.h[4,]*exp(-Inact.h*Contact.time.face.w))
+Conc.h[5,]<-(1-TE.face*Frac.HF)*(Conc.h[4,]*exp(-Inact.h*Contact.time.face.d))
 Conc.l[5,]<-Conc.l[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
-Dose[5,]<-Dose[4,]+Conc.h[4,]*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea
-Risk[5,]<-0.722*(1-exp(Dose[5,]/1106))
+Dose[5,]<-Dose[4,]+(Conc.h[4,]*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
+Risk[5,]<-0.722*(1-exp(-Dose[5,]/1106))
 
 #Event 6. Drying Laundry 
 Conc.h[6,]<-Conc.h[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
-Conc.l[6,]<-Conc.h[5,]/10^(Reduc.wash*(Dur.dry-Contact.time.face.d)/Dur.dry)
+Conc.l[6,]<-Conc.l[5,]/10^(Reduc.dry*(Dur.dry-Contact.time.face.d)/Dur.dry)
 Dose[6,]<-Dose[5,]
 Risk[6,]<-Risk[5,]
 
 #Event 7. Dryer to folding area 
-Conc.h[7,]<-Conc.h[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.fold*
+Conc.h[7,]<-Conc.h[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*
     (Conc.h[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l[6,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l[7,]<-Conc.l[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.fold*
+Conc.l[7,]<-Conc.l[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*
     T.handarea/Surface.area.laundry*(Conc.l[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h[6,]
                                      *(exp(-Inact.h*Contact.time.laundry)))}
 Dose[7,]<-Dose[6,]
 Risk[7,]<-Risk[6,]
 
 #Event 8. Hand to face Contact #3
-Contact.time.face.f<-runif(1000, min=1/60, max=60)
 
-Conc.h[8,]<-(1-TE.face*Frac.HF)*(Conc.h[7,]*exp(-Inact.h*Contact.time.face.w))
+Conc.h[8,]<-(1-TE.face*Frac.HF)*(Conc.h[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l[8,]<-Conc.l[7,]*exp(-Inact.s*Contact.time.face.f)
-Dose[8,]<-Dose[7,]+Conc.h[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea
-Risk[8,]<-0.722*(1-exp(Dose[8,]/1106))
+Dose[8,]<-Dose[7,]+(Conc.h[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
+Risk[8,]<-0.722*(1-exp(-Dose[8,]/1106))
 
 
 #plotting
@@ -90,8 +86,8 @@ Conc.l.dataframe<-as.data.frame(t(Conc.l))
 Dose.dataframe<-as.data.frame(t(Dose))
 Risk.dataframe<-as.data.frame(t(Risk))
 
-event<-rep(c(rep(1,10000),rep(2,10000),rep(3,10000),rep(4,10000),rep(5,10000),rep(6,10000),rep(7,10000),rep(8,10000)),4)
-type<-c(rep("Hand",80000),rep("Laundry",80000),rep("Dose",80000),rep("Risk",80000))
+event<-rep(c(rep(1,iterations),rep(2,iterations),rep(3,iterations),rep(4,iterations),rep(5,iterations),rep(6,iterations),rep(7,iterations),rep(8,iterations)),4)
+type<-c(rep("Hand",8*iterations),rep("Laundry",8*iterations),rep("Dose",8*iterations),rep("Risk",8*iterations))
 value<-c(Conc.h.dataframe$`Hamper to washer`, Conc.h.dataframe$`Hand to face touch #1`,
          Conc.h.dataframe$`between face touch and end of washing cycle`,Conc.h.dataframe $`Washer to dryer`, 
          Conc.h.dataframe $`Hand to face touch #2`, Conc.h.dataframe $`Dry cycle`,
@@ -144,8 +140,8 @@ rownames(Risk.1)<-eventsname
 
 #Event 1. Loading dirty clothes from hamper to washer
 
-Conc.h.1[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.1[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
+Conc.h.1[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.onecloth*exp(-Inact.s*Contact.time.laundry))}
+Conc.l.1[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
 Dose.1[1,]<-0
 Risk.1[1,]<-0
 
@@ -154,46 +150,46 @@ Risk.1[1,]<-0
 Conc.h.1[2,]<-(1-TE.face*Frac.HF)*{(Conc.h.1[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)}
 Conc.l.1[2,]<-Conc.l.1[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose.1[2,]<-(Conc.h.1[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk.1[2,]<-0.722*(1-exp(Dose.1[2,]/1106))
+Risk.1[2,]<-0.722*(1-exp(-Dose.1[2,]/1106))
 
 
 #Event 3. Washing Laundry 
 Conc.h.1[3,]<-Conc.h.1[2,]*exp(-Inact.h*(Dur.wash-Contact.time.face.w))
-Conc.l.1[3,]<-Conc.h.1[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
+Conc.l.1[3,]<-Conc.l.1[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
 Dose.1[3,]<-Dose.1[2,]
 Risk.1[3,]<-Risk.1[2,]
 
 #Event 4. Loading washed clothes to dryer
-Conc.h.1[4,]<-Conc.h.1[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS.wash*
+Conc.h.1[4,]<-Conc.h.1[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS*
     (Conc.h.1[3,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.1[3,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.1[4,]<-Conc.l.1[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS.wash*T.handarea/Surface.area.laundry*
+Conc.l.1[4,]<-Conc.l.1[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS*T.handarea/Surface.area.laundry*
     (Conc.l.1[3,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.1[3,]*exp(-Inact.h*Contact.time.laundry))}
 Dose.1[4,]<-Dose.1[3,]
 Risk.1[4,]<-Risk.1[3,]
 
 #Event 5. Hand to face contact #2
-Conc.h.1[5,]<-(1-TE.face*Frac.HF)*(Conc.h.1[4,]*exp(-Inact.h*Contact.time.face.w))
+Conc.h.1[5,]<-(1-TE.face*Frac.HF)*(Conc.h.1[4,]*exp(-Inact.h*Contact.time.face.d))
 Conc.l.1[5,]<-Conc.l.1[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
-Dose.1[5,]<-Conc.h.1[4,]*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea
-Risk.1[5,]<-0.722*(1-exp(Dose.1[5,]/1106))
+Dose.1[5,]<- Dose.1[4,]+(Conc.h.1[4,]*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
+Risk.1[5,]<-0.722*(1-exp(-Dose.1[5,]/1106))
 
 #Event 6. Drying Laundry 
 Conc.h.1[6,]<-Conc.h.1[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
-Conc.l.1[6,]<-Conc.h.1[5,]/10^(Reduc.wash*(Dur.dry-Contact.time.face.d)/Dur.dry)
+Conc.l.1[6,]<-Conc.l.1[5,]/10^(Reduc.dry*(Dur.dry-Contact.time.face.d)/Dur.dry)
 Dose.1[6,]<-Dose.1[5,]
 Risk.1[6,]<-Risk.1[5,]
 
 #Event 7. Dryer to folding area 
-Conc.h.1[7,]<-Conc.h.1[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.fold*(Conc.h.1[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.1[6,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.1[7,]<-Conc.l.1[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.fold*T.handarea/Surface.area.laundry*(Conc.l.1[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.1[6,]*exp(-Inact.h*Contact.time.laundry))}
+Conc.h.1[7,]<-Conc.h.1[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.h.1[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.1[6,]*exp(-Inact.s*Contact.time.laundry))}
+Conc.l.1[7,]<-Conc.l.1[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.l.1[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.1[6,]*exp(-Inact.h*Contact.time.laundry))}
 Dose.1[7,]<-Dose.1[6,]
 Risk.1[7,]<-Risk.1[6,]
 
 #Event 8. Hand to face Contact #3
-Conc.h.1[8,]<-(1-TE.face*Frac.HF)*(Conc.h.1[7,]*exp(-Inact.h*Contact.time.face.w))
+Conc.h.1[8,]<-(1-TE.face*Frac.HF)*(Conc.h.1[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l.1[8,]<-Conc.l.1[7,]*exp(-Inact.s*Contact.time.face.f)
-Dose.1[8,]<-Conc.h.1[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea
-Risk.1[8,]<-0.722*(1-exp(Dose.1[8,]/1106))
+Dose.1[8,]<-Dose.1[7,]+(Conc.h.1[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
+Risk.1[8,]<-0.722*(1-exp(-Dose.1[8,]/1106))
 
 #plotting
 library(ggplot2)
@@ -205,8 +201,8 @@ Dose.1.dataframe<-as.data.frame(t(Dose.1))
 Risk.1.dataframe<-as.data.frame(t(Risk.1))
 
 
-event<-rep(c(rep(1,10000),rep(2,10000),rep(3,10000),rep(4,10000),rep(5,10000),rep(6,10000),rep(7,10000),rep(8,10000)),4)
-type<-c(rep("Hand",80000),rep("Laundry",80000),rep("Dose",80000),rep("Risk",80000))
+event<-rep(c(rep(1,iterations),rep(2,iterations),rep(3,iterations),rep(4,iterations),rep(5,iterations),rep(6,iterations),rep(7,iterations),rep(8,iterations)),4)
+type<-c(rep("Hand",8*iterations),rep("Laundry",8*iterations),rep("Dose",8*iterations),rep("Risk",8*iterations))
 value<-c(Conc.h.1.dataframe$`Hamper to washer`, Conc.h.1.dataframe$`Hand to face touch #1`,
          Conc.h.1.dataframe$`between face touch and end of washing cycle`,Conc.h.1.dataframe $`Washer to dryer`, 
          Conc.h.1.dataframe $`Hand to face touch #2`, Conc.h.1.dataframe $`Dry cycle`,
@@ -260,8 +256,8 @@ rownames(Risk.2)<-eventsname
 
 #Event 1. Loading dirty clothes from hamper to washer
 
-Conc.h.2[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.2[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
+Conc.h.2[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.onecloth*exp(-Inact.s*Contact.time.laundry))}
+Conc.l.2[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
 Dose.2[1,]<-0
 Risk.2[1,]<-0
 
@@ -270,47 +266,47 @@ Risk.2[1,]<-0
 Conc.h.2[2,]<-(1-TE.face*Frac.HF)*(Conc.h.2[1,]*exp(-Inact.h*Contact.time.face.w))
 Conc.l.2[2,]<-Conc.l.2[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose.2[2,]<-Conc.h.2[1,]*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk.2[2,]<-0.722*(1-exp(Dose.2[2,]/1106))
+Risk.2[2,]<-0.722*(1-exp(-Dose.2[2,]/1106))
 
 
 #Event 3. Washing Laundry 
 Conc.h.2[3,]<-Conc.h.2[2,]*exp(-Inact.h*(Dur.wash-Contact.time.face.w))
-Conc.l.2[3,]<-Conc.h.2[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
+Conc.l.2[3,]<-Conc.l.2[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
 Dose.2[3,]<-Dose.2[2,]
 Risk.2[3,]<-Risk.2[2,]
 
 #Event 4. Loading washed clothes to dryer
-Conc.h.2[4,]<-Conc.h.2[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS.wash*
+Conc.h.2[4,]<-Conc.h.2[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS*
     (Conc.h.2[3,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.2[3,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.2[4,]<-Conc.l.2[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS.wash*T.handarea/Surface.area.laundry*
+Conc.l.2[4,]<-Conc.l.2[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS*T.handarea/Surface.area.laundry*
     (Conc.l.2[3,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.2[3,]*exp(-Inact.h*Contact.time.laundry))}
 Dose.2[4,]<-Dose.2[3,]
 Risk.2[4,]<-Risk.2[3,]
 
 #Event 5. Hand Washing + Hand to face contact #2
 
-Conc.h.2[5,]<-(1-TE.face*Frac.HF)*{(Conc.h.2[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)}
+Conc.h.2[5,]<-(1-TE.face*Frac.HF)*{(Conc.h.2[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)}
 Conc.l.2[5,]<-Conc.l.2[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
-Dose.2[5,]<-(Conc.h.2[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea
-Risk.2[5,]<-0.722*(1-exp(Dose.2[5,]/1106))
+Dose.2[5,]<-Dose.2[4,]+((Conc.h.2[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
+Risk.2[5,]<-0.722*(1-exp(-Dose.2[5,]/1106))
 
 #Event 6. Drying Laundry 
 Conc.h.2[6,]<-Conc.h.2[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
-Conc.l.2[6,]<-Conc.h.2[5,]/10^(Reduc.wash*(Dur.dry-Contact.time.face.d)/Dur.dry)
+Conc.l.2[6,]<-Conc.l.2[5,]/10^(Reduc.dry*(Dur.dry-Contact.time.face.d)/Dur.dry)
 Dose.2[6,]<-Dose.2[5,]
 Risk.2[6,]<-Risk.2[5,]
 
 #Event 7. Dryer to folding area 
-Conc.h.2[7,]<-Conc.h.2[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.fold*(Conc.h.2[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.2[6,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.2[7,]<-Conc.l.2[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.fold*T.handarea/Surface.area.laundry*(Conc.l.2[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.2[6,]*exp(-Inact.h*Contact.time.laundry))}
+Conc.h.2[7,]<-Conc.h.2[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.h.2[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.2[6,]*exp(-Inact.s*Contact.time.laundry))}
+Conc.l.2[7,]<-Conc.l.2[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.l.2[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.2[6,]*exp(-Inact.h*Contact.time.laundry))}
 Dose.2[7,]<-Dose.2[6,]
 Risk.2[7,]<-Risk.2[6,]
 
 #Event 8. Hand to face Contact #3
-Conc.h.2[8,]<-(1-TE.face*Frac.HF)*(Conc.h.2[7,]*exp(-Inact.h*Contact.time.face.w))
+Conc.h.2[8,]<-(1-TE.face*Frac.HF)*(Conc.h.2[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l.2[8,]<-Conc.l.2[7,]*exp(-Inact.s*Contact.time.face.f)
-Dose.2[8,]<-Conc.h.2[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea
-Risk.2[8,]<-0.722*(1-exp(Dose.2[8,]/1106))
+Dose.2[8,]<-Dose.2[7,]+(Conc.h.2[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
+Risk.2[8,]<-0.722*(1-exp(-Dose.2[8,]/1106))
 
 #plotting
 library(ggplot2)
@@ -322,8 +318,8 @@ Dose.2.dataframe<-as.data.frame(t(Dose.2))
 Risk.2.dataframe<-as.data.frame(t(Risk.2))
 
 
-event<-rep(c(rep(1,10000),rep(2,10000),rep(3,10000),rep(4,10000),rep(5,10000),rep(6,10000),rep(7,10000),rep(8,10000)),4)
-type<-c(rep("Hand",80000),rep("Laundry",80000),rep("Dose",80000),rep("Risk",80000))
+event<-rep(c(rep(1,iterations),rep(2,iterations),rep(3,iterations),rep(4,iterations),rep(5,iterations),rep(6,iterations),rep(7,iterations),rep(8,iterations)),4)
+type<-c(rep("Hand",8*iterations),rep("Laundry",8*iterations),rep("Dose",8*iterations),rep("Risk",8*iterations))
 value<-c(Conc.h.2.dataframe$`Hamper to washer`, Conc.h.2.dataframe$`Hand to face touch #1`,
          Conc.h.2.dataframe$`between face touch and end of washing cycle`,Conc.h.2.dataframe $`Washer to dryer`, 
          Conc.h.2.dataframe $`Hand to face touch #2`, Conc.h.2.dataframe $`Dry cycle`,
@@ -376,8 +372,8 @@ rownames(Risk.3)<-eventsname
 
 #Event 1. Loading dirty clothes from hamper to washer
 
-Conc.h.3[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.3[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.hamper*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
+Conc.h.3[1,]<-Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.i.hand*exp(-Inact.h*Contact.time.laundry)-Conc.onecloth*exp(-Inact.s*Contact.time.laundry))}
+Conc.l.3[1,]<-Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.i.laundry*exp(-Inact.s*Contact.time.laundry)-Conc.i.hand*exp(-Inact.h*Contact.time.laundry))}
 Dose.3[1,]<-0
 Risk.3[1,]<-0
 
@@ -386,48 +382,48 @@ Risk.3[1,]<-0
 Conc.h.3[2,]<-(1-TE.face*Frac.HF)*{(Conc.h.3[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)}
 Conc.l.3[2,]<-Conc.l.3[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose.3[2,]<-(Conc.h.3[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk.3[2,]<-0.722*(1-exp(Dose.3[2,]/1106))
+Risk.3[2,]<-0.722*(1-exp(-Dose.3[2,]/1106))
 
 
 
 #Event 3. Washing Laundry 
 Conc.h.3[3,]<-Conc.h.3[2,]*exp(-Inact.h*(Dur.wash-Contact.time.face.w))
-Conc.l.3[3,]<-Conc.h.3[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
+Conc.l.3[3,]<-Conc.l.3[2,]/10^(Reduc.wash*(Dur.wash-Contact.time.face.w)/Dur.wash)
 Dose.3[3,]<-Dose.3[2,]
 Risk.3[3,]<-Risk.3[2,]
 
 #Event 4. Loading washed clothes to dryer
-Conc.h.3[4,]<-Conc.h.3[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS.wash*
+Conc.h.3[4,]<-Conc.h.3[3,]*exp(-Inact.h*Contact.time.laundry)-{TE.wet*Frac.HS*
     (Conc.h.3[3,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.3[3,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.3[4,]<-Conc.l.3[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS.wash*T.handarea/Surface.area.laundry*
+Conc.l.3[4,]<-Conc.l.3[3,]*exp(-Inact.s*Contact.time.laundry)-{TE.wet*Frac.HS*T.handarea/Surface.area.laundry*
     (Conc.l.3[3,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.3[3,]*exp(-Inact.h*Contact.time.laundry))}
 Dose.3[4,]<-Dose.3[3,]
 Risk.3[4,]<-Risk.3[3,]
 
 #Event 5. Hand Washing + Hand to face contact #2
 
-Conc.h.3[5,]<-(1-TE.face*Frac.HF)*{(Conc.h.3[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)}
+Conc.h.3[5,]<-(1-TE.face*Frac.HF)*{(Conc.h.3[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)}
 Conc.l.3[5,]<-Conc.l.3[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
-Dose.3[5,]<-(Conc.h.3[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea
-Risk.3[5,]<-0.722*(1-exp(Dose.3[5,]/1106))
+Dose.3[5,]<-Dose.3[4,]+((Conc.h.3[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
+Risk.3[5,]<-0.722*(1-exp(-Dose.3[5,]/1106))
 
 #Event 6. Drying Laundry 
 Conc.h.3[6,]<-Conc.h.3[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
-Conc.l.3[6,]<-Conc.h.3[5,]/10^(Reduc.wash*(Dur.dry-Contact.time.face.d)/Dur.dry)
+Conc.l.3[6,]<-Conc.l.3[5,]/10^(Reduc.dry*(Dur.dry-Contact.time.face.d)/Dur.dry)
 Dose.3[6,]<-Dose.3[5,]
 Risk.3[6,]<-Risk.3[5,]
 
 #Event 7. Dryer to folding area 
-Conc.h.3[7,]<-Conc.h.3[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS.fold*(Conc.h.3[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.3[6,]*exp(-Inact.s*Contact.time.laundry))}
-Conc.l.3[7,]<-Conc.l.3[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS.fold*T.handarea/Surface.area.laundry*(Conc.l.3[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.3[6,]*exp(-Inact.h*Contact.time.laundry))}
+Conc.h.3[7,]<-Conc.h.3[6,]*exp(-Inact.h*Contact.time.laundry)-{TE.dry*Frac.HS*(Conc.h.3[6,]*exp(-Inact.h*Contact.time.laundry)-Conc.l.3[6,]*exp(-Inact.s*Contact.time.laundry))}
+Conc.l.3[7,]<-Conc.l.3[6,]*exp(-Inact.s*Contact.time.laundry)-{TE.dry*Frac.HS*T.handarea/Surface.area.laundry*(Conc.l.3[6,]*exp(-Inact.s*Contact.time.laundry)-Conc.h.3[6,]*exp(-Inact.h*Contact.time.laundry))}
 Dose.3[7,]<-Dose.3[6,]
 Risk.3[7,]<-Risk.3[6,]
 
 #Event 8. Hand to face Contact #3
-Conc.h.3[8,]<-(1-TE.face*Frac.HF)*(Conc.h.3[7,]*exp(-Inact.h*Contact.time.face.w))
+Conc.h.3[8,]<-(1-TE.face*Frac.HF)*(Conc.h.3[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l.3[8,]<-Conc.l.3[7,]*exp(-Inact.s*Contact.time.face.f)
-Dose.3[8,]<-Conc.h.3[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea
-Risk.3[8,]<-0.722*(1-exp(Dose.3[8,]/1106))
+Dose.3[8,]<-Dose.3[7,]+(Conc.h.3[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
+Risk.3[8,]<-0.722*(1-exp(-Dose.3[8,]/1106))
 
 #plotting
 library(ggplot2)
@@ -439,8 +435,8 @@ Dose.3.dataframe<-as.data.frame(t(Dose.3))
 Risk.3.dataframe<-as.data.frame(t(Risk.3))
 
 
-event<-rep(c(rep(1,10000),rep(2,10000),rep(3,10000),rep(4,10000),rep(5,10000),rep(6,10000),rep(7,10000),rep(8,10000)),4)
-type<-c(rep("Hand",80000),rep("Laundry",80000),rep("Dose",80000),rep("Risk",80000))
+event<-rep(c(rep(1,iterations),rep(2,iterations),rep(3,iterations),rep(4,iterations),rep(5,iterations),rep(6,iterations),rep(7,iterations),rep(8,iterations)),4)
+type<-c(rep("Hand",8*iterations),rep("Laundry",8*iterations),rep("Dose",8*iterations),rep("Risk",8*iterations))
 value<-c(Conc.h.3.dataframe$`Hamper to washer`, Conc.h.3.dataframe$`Hand to face touch #1`,
          Conc.h.3.dataframe$`between face touch and end of washing cycle`,Conc.h.3.dataframe $`Washer to dryer`, 
          Conc.h.3.dataframe $`Hand to face touch #2`, Conc.h.3.dataframe $`Dry cycle`,
@@ -468,3 +464,18 @@ windows()
 ggplot(data)+geom_violin(aes(x=event,y=value,fill=type, group=event),alpha=0.3,draw_quantiles = c(0.25,0.5,0.75))+
   facet_wrap(~type,scales="free") +
   scale_y_continuous(trans="log10")
+
+#Sensitivity Analysis---------------------------------------------------
+
+spear.Noro<-data.frame(T.handarea, Surface.area.laundry, Frac.HS, Frac.HF, Item.laundry,
+                       Contact.time.laundry, Contact.time.face.w, Contact.time.face.d, Contact.time.face.f,
+                       Reduc.wash, Reduc.dry, Reduc.hwash, TE.dry, TE.wet, TE.face,
+                       Conversion.ratio, Viralload, Mass.feces, Conc.onecloth, Inact.h, Inact.s, Risk.3[8,])  
+
+spear.anal<-cor(spear.Noro,method="spearman")
+
+View(spear.anal)
+
+library(openxlsx)
+write.xlsx(spear.anal, sheetName="Noro", file="Sensitivity.noro.xlsx")
+
