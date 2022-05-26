@@ -88,13 +88,13 @@ for (f in 1:8){
 
 #Pull out the data 
 library(openxlsx)
-write.xlsx(matrix.Conc.h, sheetName="Conc.h", file="Conc.h.rota.xlsx")
-write.xlsx(matrix.Conc.l, sheetName="Conc.l", file="Conc.l.rota.xlsx")
-write.xlsx(matrix.Dose, sheetName="Dose", file="Dose.rota.xlsx")
-write.xlsx(matrix.Risk, sheetName="Risk", file="Risk.rota.xlsx")
-write.xlsx(matrix.Risk.1, sheetName="Risk.1", file="Risk.1.rota.xlsx")
-write.xlsx(matrix.Risk.2, sheetName="Risk.2", file="Risk.2.rota.xlsx")
-write.xlsx(matrix.Risk.3, sheetName="Risk.3", file="Risk.3.rota.xlsx")
+write.csv(matrix.Conc.h, file="Conc.h.csv")
+write.csv(matrix.Conc.l, file="Conc.l.csv")
+write.csv(matrix.Dose, file="Dose.csv")
+write.csv(matrix.Risk, file="Risk.csv")
+write.csv(matrix.Risk.1, file="Risk.1.CSV")
+write.csv(matrix.Risk.2,  file="Risk.2.CSV")
+write.csv(matrix.Risk.3, file="Risk.3.CSV")
 
 #Check the data 
 View(matrix.Conc.h)
