@@ -1,9 +1,9 @@
 library(readr)
-baseline_scenario_result_graph <- read_csv("C:/Users/jyh20/Desktop/Research/1. 2021 SS_Laundry project P&G/Laundry project/new/paper/Result table and graph/baseline scenario result graph.csv")
+baseline_scenario_result_graph <- read_csv("baseline scenario result graph.csv")
 View(baseline_scenario_result_graph)
 
 library(readr)
-baseline_dose <- read_csv("C:/Users/jyh20/Desktop/Research/1. 2021 SS_Laundry project P&G/Laundry project/new/paper/Result table and graph/baseline_dose.csv")
+baseline_dose <- read_csv("baseline_dose.csv")
 View(baseline_dose)
 
 require(ggplot2)
