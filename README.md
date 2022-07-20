@@ -15,7 +15,7 @@ Author: Yoonhee Jung
 - include codes for pulling out all the result to baseline scenario and handwashing scenarios (1, 2, and 3) for each pathogen as an excel file. 
 - have to adjust file name before run it. 
 
-## For different washing and drying option test --------------------------------------------------------------------
+## For different washing and drying option test ---------------------------------------------------
 
 4. warm wash and terry cotton.R
 - for running this different washing and drying option test, you need to run Parameters and distributions. R first. (in step 1)
