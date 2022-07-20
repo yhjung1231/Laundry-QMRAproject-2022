@@ -15,13 +15,15 @@ Author: Yoonhee Jung
 - include codes for pulling out all the result to baseline scenario and handwashing scenarios (1, 2, and 3) for each pathogen as an excel file. 
 - have to adjust file name before run it. 
 
-4. baselinegraph.R
-- include codes for making baselinescenrio graph for each pathogens. 
-- ggplot ribbon graph
+(optional) 4. baselinegraph.R
+- This file was used for making a baselinegraph(riboon plot) using ggplot2.
+- You can make your own graph using the result you got from the process above (step 1-3).
+- baseline_dose.csv and baseline scenario result graph.csv was used.
 
 ## For different washing and drying option test --------------------------------------------------------------------
 
 5. warm wash and terry cotton.R
+- for running this different washing and drying option test, you need to run Parameters and distributions. R first. (in step 1)
 - include codes for testing warmwater washing cycle, the different fabric type (terry cotton instead of cotton linen), and line drying scenario for the E. coli data
 - Each scenario follows up to the 8 events for concentration on hand, concentration on laundry, dose, risk.
 
