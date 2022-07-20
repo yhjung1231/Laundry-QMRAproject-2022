@@ -83,13 +83,13 @@ for (f in 1:8){
 
 
 library(openxlsx)
-write.xlsx(matrix.Risk.tc, sheetName="Risk.tc", file="Risk.tc.xlsx")
-write.xlsx(matrix.Risk.tw, sheetName="Risk.tw", file="Risk.tw.xlsx")
-write.xlsx(matrix.Risk.line, sheetName="Risk.line", file="Risk.line.xlsx")
+write.csv(matrix.Risk.tc, file="Risk.tc.csv")
+write.csv(matrix.Risk.tw,  file="Risk.tw.csv")
+write.csv(matrix.Risk.line,  file="Risk.line.csv")
 
-write.xlsx(matrix.Conc.l.tc, sheetName="Conc.l.tc", file="Conc.l.tc.xlsx")
-write.xlsx(matrix.Conc.l.tw, sheetName="Conc.l.tw", file="Conc.l.tw.xlsx")
-write.xlsx(matrix.Conc.l.line, sheetName="Conc.l.line", file="Conc.l.line.xlsx")
+write.csv(matrix.Conc.l.tc,  file="Conc.l.tc.csv")
+write.csv(matrix.Conc.l.tw, file="Conc.l.tw.csv")
+write.csv(matrix.Conc.l.line, file="Conc.l.line.csv")
 
 
 View(matrix.Conc.l.tc)
