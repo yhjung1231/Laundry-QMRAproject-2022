@@ -26,7 +26,7 @@ Author: Yoonhee Jung
 - include codes for pulling out all the result to E.coli option test scenarios as an excel file. 
 - have to adjust file name before run it.
 
-## For improved hand hygiene (handwashing/hand sanitizer) can reduce more than 3 log reduction scenario -----------------------------
+## For improved hand hygiene (handwashing/hand sanitizer can reduce more than 3 log reduction) scenario -----------------------------
 
 6. Parameters and distributions_hwash_impr.R
 - parameters for improved hand hygiene scenario version.
