@@ -17,8 +17,9 @@ Author: Yoonhee Jung
 
 (optional) 4. baselinegraph.R
 - This file was used for making a baselinegraph(riboon plot) using ggplot2.
+- I used baseline_dose.csv and baseline scenario result graph.csv for making a graph. 
 - You can make your own graph using the result you got from the process above (step 1-3).
-- baseline_dose.csv and baseline scenario result graph.csv was used.
+
 
 ## For different washing and drying option test --------------------------------------------------------------------
 
