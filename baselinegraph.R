@@ -22,7 +22,7 @@ A<-ggplot(baseline_scenario_result_graph)+
   theme_bw()+
   scale_y_continuous(name="Risk")
  
-
+ggsave("figure_dpi600.tiff", dpi=600, dev='tiff', height=5, width=8, units="in")
 
 B<-ggplot(baseline_dose)+ 
   geom_point(aes(x=Event, y=Mean, group=Organisms, color=Organisms))+
