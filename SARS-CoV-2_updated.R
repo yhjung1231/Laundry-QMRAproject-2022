@@ -480,4 +480,4 @@ spear.anal<-cor(spear.SARS,method="spearman")
 View(spear.anal)
 
 library(openxlsx)
-write.xlsx(spear.anal, sheetName="SARS", file="Sensitivity.sars1.xlsx")
+write.xlsx(spear.anal, sheetName="SARS_up", file="Sensitivity.sars1_up.xlsx")
