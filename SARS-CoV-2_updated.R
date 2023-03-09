@@ -35,7 +35,7 @@ Risk[1,]<-0
 Conc.h[2,]<-(1-TE.face*Frac.HF)*(Conc.h[1,]*exp(-Inact.h*Contact.time.face.w))
 Conc.l[2,]<-Conc.l[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose[2,]<-Conc.h[1,]*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk[2,]<-1-exp(-Dose[2,]/18.54)
+Risk[2,]<-1-exp(-5.39E-02*Dose[2,])
 
 #Event 3. Washing Laundry 
 Conc.h[3,]<-Conc.h[2,]*exp(-Inact.h*(Dur.wash-Contact.time.face.w))
@@ -56,7 +56,7 @@ Risk[4,]<-Risk[3,]
 Conc.h[5,]<-(1-TE.face*Frac.HF)*(Conc.h[4,]*exp(-Inact.h*Contact.time.face.d))
 Conc.l[5,]<-Conc.l[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
 Dose[5,]<-Dose[4,]+(Conc.h[4,]*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
-Risk[5,]<- 1-exp(-Dose[5,]/18.54)
+Risk[5,]<- 1-exp(-5.39E-02*Dose[5,])
 
 #Event 6. Drying Laundry 
 Conc.h[6,]<-Conc.h[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
@@ -77,7 +77,7 @@ Risk[7,]<-Risk[6,]
 Conc.h[8,]<-(1-TE.face*Frac.HF)*(Conc.h[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l[8,]<-Conc.l[7,]*exp(-Inact.s*Contact.time.face.f)
 Dose[8,]<-Dose[7,]+(Conc.h[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
-Risk[8,]<- 1-exp(-Dose[8,]/18.54)
+Risk[8,]<- 1-exp(-5.39E-02*Dose[8,])
 
 
 #plotting
@@ -153,7 +153,7 @@ Risk.1[1,]<-0
 Conc.h.1[2,]<-(1-TE.face*Frac.HF)*{(Conc.h.1[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)}
 Conc.l.1[2,]<-Conc.l.1[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose.1[2,]<-(Conc.h.1[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk.1[2,]<-1-exp(-Dose.1[2,]/18.54)
+Risk.1[2,]<-1-exp(-5.39E-02*Dose.1[2,])
 
 
 #Event 3. Washing Laundry 
@@ -174,7 +174,7 @@ Risk.1[4,]<-Risk.1[3,]
 Conc.h.1[5,]<-(1-TE.face*Frac.HF)*(Conc.h.1[4,]*exp(-Inact.h*Contact.time.face.d))
 Conc.l.1[5,]<-Conc.l.1[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
 Dose.1[5,]<-Dose.1[4,]+(Conc.h.1[4,]*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
-Risk.1[5,]<- 1-exp(-Dose.1[5,]/18.54)
+Risk.1[5,]<- 1-exp(-5.39E-02*Dose.1[5,])
 
 #Event 6. Drying Laundry 
 Conc.h.1[6,]<-Conc.h.1[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
@@ -192,7 +192,7 @@ Risk.1[7,]<-Risk.1[6,]
 Conc.h.1[8,]<-(1-TE.face*Frac.HF)*(Conc.h.1[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l.1[8,]<-Conc.l.1[7,]*exp(-Inact.s*Contact.time.face.f)
 Dose.1[8,]<-Dose.1[7,]+(Conc.h.1[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
-Risk.1[8,]<- 1-exp(-Dose.1[8,]/18.54)
+Risk.1[8,]<- 1-exp(-5.39E-02*Dose.1[8,])
 
 #plotting
 library(ggplot2)
@@ -269,7 +269,7 @@ Risk.2[1,]<-0
 Conc.h.2[2,]<-(1-TE.face*Frac.HF)*(Conc.h.2[1,]*exp(-Inact.h*Contact.time.face.w))
 Conc.l.2[2,]<-Conc.l.2[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose.2[2,]<-Conc.h.2[1,]*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk.2[2,]<-1-exp(-Dose.2[2,]/18.54)
+Risk.2[2,]<-1-exp(-5.39E-02*Dose.2[2,])
 
 
 #Event 3. Washing Laundry 
@@ -291,7 +291,7 @@ Risk.2[4,]<-Risk.2[3,]
 Conc.h.2[5,]<-(1-TE.face*Frac.HF)*{(Conc.h.2[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)}
 Conc.l.2[5,]<-Conc.l.2[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
 Dose.2[5,]<-Dose.2[4,]+((Conc.h.2[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
-Risk.2[5,]<- 1-exp(-Dose.2[5,]/18.54)
+Risk.2[5,]<- 1-exp(-5.39E-02*Dose.2[5,])
 
 #Event 6. Drying Laundry 
 Conc.h.2[6,]<-Conc.h.2[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
@@ -309,7 +309,7 @@ Risk.2[7,]<-Risk.2[6,]
 Conc.h.2[8,]<-(1-TE.face*Frac.HF)*(Conc.h.2[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l.2[8,]<-Conc.l.2[7,]*exp(-Inact.s*Contact.time.face.f)
 Dose.2[8,]<-Dose.2[7,]+(Conc.h.2[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
-Risk.2[8,]<- 1-exp(-Dose.2[8,]/18.54)
+Risk.2[8,]<- 1-exp(-5.39E-02*Dose.2[8,])
 
 #plotting
 library(ggplot2)
@@ -385,7 +385,7 @@ Risk.3[1,]<-0
 Conc.h.3[2,]<-(1-TE.face*Frac.HF)*{(Conc.h.3[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)}
 Conc.l.3[2,]<-Conc.l.3[1,]/10^(Reduc.wash*Contact.time.face.w/Dur.wash)
 Dose.3[2,]<-(Conc.h.3[1,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.w)*TE.face*Frac.HF*T.handarea
-Risk.3[2,]<-1-exp(-Dose.3[2,]/18.54)
+Risk.3[2,]<-1-exp(-5.39E-02*Dose.3[2,])
 
 
 
@@ -408,7 +408,7 @@ Risk.3[4,]<-Risk.3[3,]
 Conc.h.3[5,]<-(1-TE.face*Frac.HF)*{(Conc.h.3[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)}
 Conc.l.3[5,]<-Conc.l.3[4,]/10^(Reduc.dry*Contact.time.face.d/Dur.dry)
 Dose.3[5,]<-Dose.3[4,]+((Conc.h.3[4,]/10^Reduc.hwash)*exp(-Inact.h*Contact.time.face.d)*TE.face*Frac.HF*T.handarea)
-Risk.3[5,]<- 1-exp(-Dose.3[5,]/18.54)
+Risk.3[5,]<- 1-exp(-5.39E-02*Dose.3[5,])
 
 #Event 6. Drying Laundry 
 Conc.h.3[6,]<-Conc.h.3[5,]*exp(-Inact.h*(Dur.dry-Contact.time.face.d))
@@ -426,7 +426,7 @@ Risk.3[7,]<-Risk.3[6,]
 Conc.h.3[8,]<-(1-TE.face*Frac.HF)*(Conc.h.3[7,]*exp(-Inact.h*Contact.time.face.f))
 Conc.l.3[8,]<-Conc.l.3[7,]*exp(-Inact.s*Contact.time.face.f)
 Dose.3[8,]<-Dose.3[7,]+(Conc.h.3[7,]*exp(-Inact.h*Contact.time.face.f)*TE.face*Frac.HF*T.handarea)
-Risk.3[8,]<- 1-exp(-Dose.3[8,]/18.54)
+Risk.3[8,]<- 1-exp(-5.39E-02*Dose.3[8,])
 
 #plotting
 library(ggplot2)
