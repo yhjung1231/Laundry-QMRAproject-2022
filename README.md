@@ -1,5 +1,6 @@
 # Laundry-QMRAproject
-AJIC, Under review (2023) 
+AJIC, Published (2023) 
+https://doi.org/10.1016/j.ajic.2023.05.017
 
 Project title: Evaluating infection risks and importance of hand washing during household laundry process using a QMRA approach
 
