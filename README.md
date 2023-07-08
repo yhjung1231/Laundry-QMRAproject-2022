@@ -1,7 +1,19 @@
 # Laundry-QMRAproject
+AJIC, Published (2023) 
+https://doi.org/10.1016/j.ajic.2023.05.017
 
 Project title: Evaluating infection risks and importance of hand washing during household laundry process using a QMRA approach
-Author: Yoonhee Jung 
+
+Yoonhee Jung,1* Sarah E. Abney,2 Kelly A. Reynolds,1 Charles P. Gerba,3 Amanda M. Wilson1
+
+1. Department of Community, Environment & Policy, Mel and Enid Zuckerman College of
+Public Health, University of Arizona, AZ, USA
+2. García-Robles Fulbright Program, Centro de Investigación Científica de Yucatán,
+Yucatán, México
+3. Department of Environmental Science, College of Agriculture and Life Sciences,
+University of Arizona, AZ, USA
+
+------------------------------------------------------------------------------------------------
 
 1. Parameters and distributions. R
 - include all original parameters and distributions for testing baseline, handwashing 1, 2, 3, warmwater washing (E. coli), terry cotton fabric (E. coli), and line drying (E. coli) scenarios for each pathogens. 
